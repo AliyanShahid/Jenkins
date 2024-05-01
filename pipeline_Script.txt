@@ -1,0 +1,50 @@
+pipeline{
+    agent any 
+    environment{
+        DIRECTORY_PATH= "https://github.com/AliyanShahid/sit725-2023-t1-prac3"
+        TESTING_ENVIRONMENT= "testing_environment"
+        PRODUCTION_ENVIRONMENT= "Aliyan"
+    }
+    stages{
+        stage('build'){
+            steps{
+                echo "Fetch Source Code"
+                git branch: 'main' , url:'https://github.com/AliyanShahid/sit725-2023-t1-prac3'
+                echo "Compile the code"
+            }
+        }
+        stage('Test'){
+            steps{
+                echo "Running Unit Tests"
+            }
+        }
+        stage('Code Quality Check'){
+            steps{
+                echo "Checking the Code Quality"
+            }
+        }
+        stage('Deploy'){
+            steps{
+                echo "Deploying the code to testing environment at: ${env.TESTING_ENVIRONMENT}"
+            }
+        }
+        stage('Approval'){
+            steps{
+                script{
+                    echo "waiting for approval"
+                    sleep(time: 10, unit: 'SECONDS')
+                }
+            }
+        }
+        stage('Deploy to Production'){
+            steps{
+                echo "Deploying Project on Production environment: ${env.PRODUCTION_ENVIRONMENT}"
+            }
+        }
+    }
+}
+
+
+
+
+
